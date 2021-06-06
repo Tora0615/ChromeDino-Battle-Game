@@ -90,7 +90,7 @@ def initroom():
     room[room_id][player_id]['move_right'] = 'False'
     room[room_id][player_id]['shoot'] = 'False'
     room[room_id][player_id]['jump'] = 'False'
-    room[room_id][player_id]['in_air'] = 'True'
+    #room[room_id][player_id]['in_air'] = 'True'
     
     
     if needToCreatNewRoom == 'True' or needToCreatNewRoom == 'true':
@@ -117,7 +117,7 @@ def updatedata():
     move_right = request.values['move_right']
     shoot = request.values['shoot']
     jump = request.values['jump']
-    in_air = request.values['in_air']
+    #in_air = request.values['in_air']
     #---- get form post method ----
 
     #---- debug only ----
@@ -130,6 +130,8 @@ def updatedata():
     #temp.append(position_y)
     temp.append(move_left)
     temp.append(move_right)
+    temp.append(shoot)
+    temp.append(jump)
     print('--> '+ str(temp))
     #---- debug only ----
     
@@ -142,7 +144,7 @@ def updatedata():
     room[room_id][player_id]['move_right'] = move_right
     room[room_id][player_id]['shoot'] = shoot
     room[room_id][player_id]['jump'] = jump
-    room[room_id][player_id]['in_air'] = in_air
+    #room[room_id][player_id]['in_air'] = in_air
     #---- update data ----
     
     #return 'ok'

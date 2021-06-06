@@ -283,13 +283,47 @@ while run:
     draw_bg()
 
     player.update()
-    player.draw()
     enemy.update()
-    enemy.draw()
-
-    #update and draw groups
     bullet_group.update()
-    bullet_group.draw(screen)
+    
+    
+    player_jump_state_in_loop = False
+    enemy_jump_state_in_loop = False
+    
+    for event in pygame.event.get():
+        #quit game
+        if event.type == pygame.QUIT:
+            run = False
+        #keyboard presses
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                moving_left = True
+            if event.key == pygame.K_d:
+                moving_right = True
+            if event.key == pygame.K_SPACE:
+                shoot = True
+            if event.key == pygame.K_ESCAPE:
+                run = False
+                
+                
+            if needToCreatNewRoom == True:
+                if event.key == pygame.K_w and player.alive:
+                    player.jump = True
+                    player_jump_state_in_loop = True
+            else:
+                if event.key == pygame.K_w and enemy.alive:
+                    enemy.jump = True
+                    enemy_jump_state_in_loop = True
+                    
+
+        #keyboard button released
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a:
+                moving_left = False
+            if event.key == pygame.K_d:
+                moving_right = False
+            if event.key == pygame.K_SPACE:
+                shoot = False
     
     #--- new ---
     
@@ -314,7 +348,15 @@ while run:
             player.move(moving_left, moving_right)
             # 上傳移動資料並隨後下載 #TODO API 更改上傳薪資料
         
-        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right,shoot))
+        now_data = eval(web_api.updatedata(room_id,
+                                           player_id,
+                                           hp,
+                                           mp,
+                                           moving_left,
+                                           moving_right,
+                                           shoot,
+                                           player_jump_state_in_loop)
+                        )
             
         if enemy.alive:
             if eval(now_data[enemy_name]['shoot']):
@@ -327,6 +369,7 @@ while run:
                 enemy.update_action(0)#0: idle
             # 根據下載資料移動對方
             enemy.move(eval(now_data[enemy_name]['move_left']),eval(now_data[enemy_name]['move_right']))
+            enemy.jump = eval(now_data[enemy_name]['jump'])
         
     else:
         # 這是enemy (User02/add)
@@ -345,7 +388,15 @@ while run:
                 
             enemy.move(moving_left, moving_right)
             
-        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right,shoot))
+        now_data = eval(web_api.updatedata(room_id,
+                                           player_id,
+                                           hp,
+                                           mp,
+                                           moving_left,
+                                           moving_right,
+                                           shoot,
+                                           enemy_jump_state_in_loop)
+                        )
             
         if player.alive:
             if eval(now_data[enemy_name]['shoot']):
@@ -358,7 +409,7 @@ while run:
                 player.update_action(0)#0: idle
                 
             player.move(eval(now_data[enemy_name]['move_left']),eval(now_data[enemy_name]['move_right']))
-        
+            player.jump = eval(now_data[enemy_name]['jump'])
     
     #--- new ---
     
@@ -367,35 +418,9 @@ while run:
     
         
     
-    for event in pygame.event.get():
-        #quit game
-        if event.type == pygame.QUIT:
-            run = False
-        #keyboard presses
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                moving_left = True
-            if event.key == pygame.K_d:
-                moving_right = True
-                
-            if event.key == pygame.K_SPACE:
-                shoot = True
-            if event.key == pygame.K_w and player.alive:
-                player.jump = True
-            if event.key == pygame.K_w and enemy.alive:
-                enemy.jump = True
-                
-            if event.key == pygame.K_ESCAPE:
-                run = False
-
-        #keyboard button released
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
-                moving_left = False
-            if event.key == pygame.K_d:
-                moving_right = False
-            if event.key == pygame.K_SPACE:
-                shoot = False
+    player.draw()
+    enemy.draw()
+    bullet_group.draw(screen)
             
 
 
