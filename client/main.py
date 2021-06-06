@@ -30,7 +30,7 @@ while len(initdata) != 2:
     time.sleep(1)
     print('.',end = '')
     initdata = eval(web_api.getdata(room_id))
-print('玩家已到齊 ! ')
+print('\n玩家已到齊 ! ')
 
 
 player_id = player_name = username
@@ -313,8 +313,18 @@ while run:
             # 自己移動
             player.move(moving_left, moving_right)
             # 上傳移動資料並隨後下載 #TODO API 更改上傳薪資料
-            now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
+        
+        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
             
+        if enemy.alive:
+            if shoot:
+                enemy.shoot()
+            if enemy.in_air:
+                enemy.update_action(2)#2: jump
+            elif eval(now_data[enemy_name]['move_left']) or eval(now_data[enemy_name]['move_right']):
+                enemy.update_action(1)#1: run
+            else:
+                enemy.update_action(0)#0: idle
             # 根據下載資料移動對方
             enemy.move(eval(now_data[enemy_name]['move_left']),eval(now_data[enemy_name]['move_right']))
         
@@ -333,10 +343,20 @@ while run:
             else:
                 enemy.update_action(0)#0: idle
                 
-
             enemy.move(moving_left, moving_right)
-            now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
             
+        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
+            
+        if player.alive:
+            if shoot:
+                player.shoot()
+            if player.in_air:
+                player.update_action(2)#2: jump
+            elif eval(now_data[enemy_name]['move_left']) or eval(now_data[enemy_name]['move_right']):
+                player.update_action(1)#1: run
+            else:
+                player.update_action(0)#0: idle
+                
             player.move(eval(now_data[enemy_name]['move_left']),eval(now_data[enemy_name]['move_right']))
         
     
