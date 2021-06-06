@@ -49,7 +49,7 @@ def initgame():
     pass
 
 
-def updatedata(room_id,player_id,hp,mp,move_left,move_right,shoot):
+def updatedata(room_id,player_id,hp,mp,move_left,move_right,shoot,jump,in_air):
     my_data = {'room_id': room_id, 
                'player_id':player_id, 
                'hp':hp,
@@ -58,7 +58,9 @@ def updatedata(room_id,player_id,hp,mp,move_left,move_right,shoot):
                #'position_y':position_y
                'move_left':move_left,
                'move_right':move_right,
-               'shoot':shoot
+               'shoot':shoot,
+               'jump':jump,
+               'in_air':in_air
                }
     url = 'http://10.147.17.133:8000/updatedata'
     result = requests.post(url, data = my_data)
