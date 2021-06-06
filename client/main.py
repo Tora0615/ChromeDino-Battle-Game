@@ -10,16 +10,16 @@ import time
 import web_api
     
 
-    
+username = input('輸入用戶名稱 : ') 
 temp = input('輸入數字加入或是創立房間(0加入 1創立) : ') 
 if temp == '0':
     needToCreatNewRoom = False
-    room_id = str(input('輸入房間id : '))
+    room_id = str(input('輸入房間id : '))  #TODO 輸錯重來
 else:
     needToCreatNewRoom = True
     room_id = web_api.get_uuid()
     
-username = input('輸入用戶名稱 : ') 
+
 web_api.initroom(needToCreatNewRoom,room_id,username)
 
 initdata = eval(web_api.getdata(room_id))
@@ -218,7 +218,7 @@ class Soldier(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
 	def __init__(self, x, y, direction):
 		pygame.sprite.Sprite.__init__(self)
-		self.speed = 1 #10
+		self.speed = 10
 		self.image = bullet_img
 		self.rect = self.image.get_rect()
 		self.rect.center = (x, y)
@@ -298,31 +298,30 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
                 moving_left = True
-            if event.key == pygame.K_d:
+            elif event.key == pygame.K_d:
                 moving_right = True
-            if event.key == pygame.K_SPACE:
+            elif event.key == pygame.K_h:
                 shoot = True
-            if event.key == pygame.K_ESCAPE:
+            elif event.key == pygame.K_ESCAPE:
                 run = False
-                
-                
-            if needToCreatNewRoom == True:
-                if event.key == pygame.K_w and player.alive:
-                    player.jump = True
-                    player_jump_state_in_loop = True
             else:
-                if event.key == pygame.K_w and enemy.alive:
-                    enemy.jump = True
-                    enemy_jump_state_in_loop = True
+                if needToCreatNewRoom == True:
+                    if event.key == pygame.K_w and player.alive or event.key == pygame.K_SPACE and player.alive:
+                        player.jump = True
+                        player_jump_state_in_loop = True
+                else:
+                    if event.key == pygame.K_w and enemy.alive or event.key == pygame.K_SPACE and enemy.alive:
+                        enemy.jump = True
+                        enemy_jump_state_in_loop = True
                     
 
         #keyboard button released
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 moving_left = False
-            if event.key == pygame.K_d:
+            elif event.key == pygame.K_d:
                 moving_right = False
-            if event.key == pygame.K_SPACE:
+            elif event.key == pygame.K_h:
                 shoot = False
     
     #--- new ---
@@ -346,7 +345,7 @@ while run:
                 
             # 自己移動
             player.move(moving_left, moving_right)
-            # 上傳移動資料並隨後下載 #TODO API 更改上傳薪資料
+            # 上傳移動資料並隨後下載 
         
         now_data = eval(web_api.updatedata(room_id,
                                            player_id,
