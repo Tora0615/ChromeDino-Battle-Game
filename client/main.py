@@ -218,7 +218,7 @@ class Soldier(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
 	def __init__(self, x, y, direction):
 		pygame.sprite.Sprite.__init__(self)
-		self.speed = 10
+		self.speed = 1 #10
 		self.image = bullet_img
 		self.rect = self.image.get_rect()
 		self.rect.center = (x, y)
@@ -314,10 +314,10 @@ while run:
             player.move(moving_left, moving_right)
             # 上傳移動資料並隨後下載 #TODO API 更改上傳薪資料
         
-        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
+        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right,shoot))
             
         if enemy.alive:
-            if shoot:
+            if eval(now_data[enemy_name]['shoot']):
                 enemy.shoot()
             if enemy.in_air:
                 enemy.update_action(2)#2: jump
@@ -345,10 +345,10 @@ while run:
                 
             enemy.move(moving_left, moving_right)
             
-        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right))
+        now_data = eval(web_api.updatedata(room_id,player_id,hp,mp,moving_left,moving_right,shoot))
             
         if player.alive:
-            if shoot:
+            if eval(now_data[enemy_name]['shoot']):
                 player.shoot()
             if player.in_air:
                 player.update_action(2)#2: jump

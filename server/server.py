@@ -21,7 +21,8 @@ room = {'myroom':
             'position_x':200,
             'position_y':200,
             'move_left':False,
-            'move_right':False
+            'move_right':False,
+            'shoot':False
             },
          'player2':{
              'hp':1000,
@@ -29,7 +30,8 @@ room = {'myroom':
              'position_x':400,
              'position_y':200,
              'move_left':False,
-             'move_right':False
+             'move_right':False,
+             'shoot':False
              }
          }
         }
@@ -86,6 +88,7 @@ def initroom():
     room[room_id][player_id]['position_y'] = position_y
     room[room_id][player_id]['move_left'] = 'False'
     room[room_id][player_id]['move_right'] = 'False'
+    room[room_id][player_id]['shoot'] = 'False'
     
     
     if needToCreatNewRoom == 'True' or needToCreatNewRoom == 'true':
@@ -110,8 +113,7 @@ def updatedata():
     #position_y = request.values['position_y']
     move_left = request.values['move_left']
     move_right = request.values['move_right']
-    #move_up = 
-    #move_down = 
+    shoot = request.values['shoot']
     #---- get form post method ----
 
     #---- debug only ----
@@ -134,6 +136,7 @@ def updatedata():
     #room[room_id][player_id]['position_y'] = position_y
     room[room_id][player_id]['move_left'] = move_left
     room[room_id][player_id]['move_right'] = move_right
+    room[room_id][player_id]['shoot'] = shoot
     #---- update data ----
     
     #return 'ok'
