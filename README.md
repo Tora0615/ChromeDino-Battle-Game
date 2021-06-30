@@ -10,9 +10,8 @@
 
 
 ## Original option
-:::warning
-This project haven't done yet. 
-:::
+> **warning** This project haven't done yet. 
+
 
 This is Python class's Final Rroject.
 
@@ -36,9 +35,8 @@ Part 2 : client
 * Gaming page
 
 ## New option
-:::warning
-This project can play but not perfect. 
-:::
+> **Info** : This project can play but not perfect. 
+
 You can use keyboard's W,S,and J to contorl Dino
 
 ![](New_option\game_screen.png)
