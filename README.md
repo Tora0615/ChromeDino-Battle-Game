@@ -10,7 +10,7 @@
 
 
 ## Original option
-> **warning** This project haven't done yet. 
+> **warning** : This project haven't done yet. 
 
 
 This is Python class's Final Rroject.
