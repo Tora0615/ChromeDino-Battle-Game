@@ -39,5 +39,5 @@ Part 2 : client
 
 You can use keyboard's W,S,and J to contorl Dino
 
-![pic](New_option\game_screen.png)
+![](New_option/game_screen.png)
 
