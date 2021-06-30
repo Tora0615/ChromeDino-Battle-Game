@@ -251,23 +251,23 @@ if needToCreatNewRoom == True: #true -> 自己 = player -> 綠色那隻
     player = Soldier('player', 
                      int(initdata[player_name]['position_x']), 
                      int(initdata[player_name]['position_y']), 
-                     3, 
+                     1, 
                      5)
     enemy = Soldier('enemy', 
                     int(initdata[enemy_name]['position_x']), 
                     int(initdata[enemy_name]['position_y']), 
-                    3, 
+                    1, 
                     5)
 else:
     player = Soldier('player', 
                      int(initdata[enemy_name]['position_x']), 
                      int(initdata[enemy_name]['position_y']), 
-                     3, 
+                     1, 
                      5)
     enemy = Soldier('enemy', 
                     int(initdata[player_name]['position_x']), 
                     int(initdata[player_name]['position_y']), 
-                    3, 
+                    1, 
                     5)
 
 
